@@ -7,18 +7,22 @@ use rand::Rng;
 fn main() {
     println!("Welcome to the guessing Game!");
     loop {
-        let secret_number = rand::thread_rng().gen_range(1, 101); // hard lower bound, soft upper bound
-        
-        println!("Secret number was: {}", secret_number);
         println!("Give me a number:");
-        
+
+        let secret_number = rand::thread_rng().gen_range(1, 101); // hard lower bound, soft upper bound
         let mut guess = String::new();
         
         io::stdin().read_line(&mut guess)
             .expect("Failed to read the line.");
 
-        let guess: u32 = guess.trim().parse()
-            .expect("Couldn't convert to number.");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Error processing your input. Is it a number?");
+                continue;
+            },
+        };
+  
 
         match guess.cmp(&secret_number) {
             Ordering::Less    => println!("Was Less!"),
@@ -28,7 +32,8 @@ fn main() {
                 break;
             },
         }
-        
-        println!("You guessed: {}", guess);
+
+        println!("Secret number was: {}", secret_number);
+        println!("You guessed wrong, your guess: {}", guess);
     }
 }
