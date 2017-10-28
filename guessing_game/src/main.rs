@@ -9,7 +9,7 @@ fn main() {
     loop {
         println!("Give me a number:");
 
-        let secret_number = rand::thread_rng().gen_range(1, 101); // hard lower bound, soft upper bound
+        let secret_number = rand::thread_rng().gen_range(1, 102); // hard lower bound, soft upper bound
         let mut guess = String::new();
         
         io::stdin().read_line(&mut guess)
